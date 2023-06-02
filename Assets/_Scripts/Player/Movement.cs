@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput), typeof(Player))]
+[RequireComponent(typeof(PlayerInput))]
 public class Movement : PlayerComponent
 {
     private Rigidbody rb;
@@ -43,9 +42,10 @@ public class Movement : PlayerComponent
     {
         switch (_state)
         {
-            case PlayerState.Airborne: targetSpeed = currentSpeed * specs.airborneSpeedModifier;  break;
+            case PlayerState.Airborne: targetSpeed = currentSpeed * specs.airborneSpeedModifier; break;
             case PlayerState.Walking: targetSpeed = specs.WalkSpeed; break;
             case PlayerState.Sprinting: targetSpeed = specs.SprintSpeed; break;
+            case PlayerState.Crouching: targetSpeed = specs.CrouchSpeed; break;
         }
     }
 
@@ -55,7 +55,7 @@ public class Movement : PlayerComponent
         Move(input.Move);
         SpeedLimit();
         CounterMovement();
-        
+
         UIManager.Instance.UpdateVelocity(rb.velocity.magnitude);
     }
 

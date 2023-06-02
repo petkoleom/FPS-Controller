@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
-[RequireComponent (typeof(Player))]
+
 public class Jumping : PlayerComponent
 {
     private Rigidbody rb;
+
+    public static event Action OnStandUp;
 
     private void Awake()
     {
@@ -22,6 +25,11 @@ public class Jumping : PlayerComponent
 
     public void Jump(bool _value)
     {
+        if (player.State == PlayerState.Crouching)
+        {
+            OnStandUp?.Invoke();
+            return;
+        }
         if (player.State == PlayerState.Airborne || !_value) return;
         rb.AddForce(specs.JumpForce * Vector3.up, ForceMode.Impulse);
     }

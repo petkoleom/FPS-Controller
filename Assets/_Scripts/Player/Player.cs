@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +6,7 @@ public class Player : MonoBehaviour
     public bool IsGrounded;
     public bool TryWalking;
     public bool TrySprinting;
+    public bool TryCrouching;
 
     [SerializeField] private PlayerSpecifications specs;
 
@@ -36,21 +36,19 @@ public class Player : MonoBehaviour
 
     private void HandleStates()
     {
-        State = PlayerState.Airborne;
-
-        if (!IsGrounded) return;
-
-        State = PlayerState.Idle;
-
-        if (!TryWalking) return;
-
-        State = PlayerState.Walking;
-
-        if(!TrySprinting) return;
-
-        State = PlayerState.Sprinting;
-
-        
+        if (IsGrounded)
+        {
+            if (TryCrouching)
+                State = PlayerState.Crouching;
+            else if (TrySprinting)
+                State = PlayerState.Sprinting;
+            else if (TryWalking)
+                State = PlayerState.Walking;
+            else
+                State = PlayerState.Idle;
+        }
+        else
+            State = PlayerState.Airborne;
     }
 }
 
@@ -59,5 +57,6 @@ public enum PlayerState
     Idle,
     Walking,
     Sprinting,
+    Crouching,
     Airborne
 }

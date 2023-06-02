@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WalkSpeed: 8
   SprintSpeed: 13
+  CrouchSpeed: 3
   airborneSpeedModifier: 0.7
   JumpForce: 15
   Sensitivity: 5

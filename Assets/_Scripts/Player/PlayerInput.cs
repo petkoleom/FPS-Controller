@@ -11,9 +11,10 @@ public class PlayerInput : MonoBehaviour
     public Vector2 Look { get; private set; }
 
     public static event Action<bool> OnJumpInput;
-    public static event Action<bool> OnSprintInput;
+    public static event Action<bool> OnSprintInput; 
+    public static event Action OnCrouchInput; 
 
-    public bool Sprint;
+    public bool Sprint { get; set; }
 
 
     private void Awake()
@@ -53,6 +54,11 @@ public class PlayerInput : MonoBehaviour
     public void OnJump(InputValue _value)
     {
         OnJumpInput?.Invoke(_value.isPressed);
+    }
+
+    public void OnCrouch(InputValue _value)
+    {
+        OnCrouchInput?.Invoke();
     }
 
 }

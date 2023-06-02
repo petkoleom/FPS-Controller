@@ -6,6 +6,7 @@ public class PlayerSpecifications : ScriptableObject
     [Header("Movement")]
     public int WalkSpeed;
     public int SprintSpeed;
+    public int CrouchSpeed;
     public float airborneSpeedModifier;
 
     [Header("Air")]
