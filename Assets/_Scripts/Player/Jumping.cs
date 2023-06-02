@@ -25,12 +25,13 @@ public class Jumping : PlayerComponent
 
     public void Jump(bool _value)
     {
-        if (player.State == PlayerState.Crouching)
+        if (player.State == PlayerState.Crouching || player.State == PlayerState.Sliding)
         {
             OnStandUp?.Invoke();
             return;
         }
         if (player.State == PlayerState.Airborne || !_value) return;
+
         rb.AddForce(specs.JumpForce * Vector3.up, ForceMode.Impulse);
     }
 }

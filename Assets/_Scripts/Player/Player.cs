@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    [SerializeField] private PlayerSpecifications specs;
+    [SerializeField] private Transform orientation;
+
     public bool IsGrounded;
     public bool TryWalking;
     public bool TrySprinting;
     public bool TryCrouching;
-
-    [SerializeField] private PlayerSpecifications specs;
-
+    public bool TrySliding;
 
     public PlayerState State;
     private PlayerState prevState;
@@ -21,7 +23,7 @@ public class Player : MonoBehaviour
         PlayerComponent[] _components = GetComponents<PlayerComponent>();
         foreach (PlayerComponent _comp in _components)
         {
-            _comp.Init(this, specs);
+            _comp.Init(this, specs, orientation);
         }
     }
 
@@ -40,6 +42,8 @@ public class Player : MonoBehaviour
         {
             if (TryCrouching)
                 State = PlayerState.Crouching;
+            else if(TrySliding)
+                State = PlayerState.Sliding;
             else if (TrySprinting)
                 State = PlayerState.Sprinting;
             else if (TryWalking)
@@ -58,5 +62,6 @@ public enum PlayerState
     Walking,
     Sprinting,
     Crouching,
+    Sliding,
     Airborne
 }

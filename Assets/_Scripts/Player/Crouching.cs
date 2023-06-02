@@ -1,11 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Crouching : PlayerComponent
 {
-    Vector3 originScale;
     [SerializeField] private float crouchScale;
 
-
+    Vector3 originScale;
 
     private void Start()
     {
@@ -26,19 +26,19 @@ public class Crouching : PlayerComponent
 
     private void Crouch()
     {
-        if (player.State == PlayerState.Airborne) return;
+        if (player.State == PlayerState.Airborne || player.State == PlayerState.Sprinting) return;
         if (player.State == PlayerState.Crouching)
             StandUp();
         else
         {
-            transform.localScale = new Vector3(1, crouchScale, 1);
+            transform.DOScaleY(crouchScale, .2f);
             player.TryCrouching = true;
         }
     }
 
     private void StandUp()
     {
-        transform.localScale = originScale;
+        transform.DOScaleY(originScale.y, .2f);
         player.TryCrouching = false;
 
     }

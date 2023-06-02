@@ -4,7 +4,6 @@ using UnityEngine;
 public class Look : PlayerComponent
 {
     private PlayerInput input;
-    private Transform orientation;
     private Transform cam;
 
     [SerializeField] private Transform cameraPosition, cameraPrefab;
@@ -14,7 +13,6 @@ public class Look : PlayerComponent
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
-        orientation = input.Orientation;
         cam = Instantiate(cameraPrefab);
         cam.GetComponent<PlayerCamera>().Init(cameraPosition);
 

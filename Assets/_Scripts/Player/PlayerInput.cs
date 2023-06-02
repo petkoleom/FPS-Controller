@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     private UnityEngine.InputSystem.PlayerInput input;
-    public Transform Orientation;
 
     public Vector2 Move { get; private set; }
     public Vector2 Look { get; private set; }

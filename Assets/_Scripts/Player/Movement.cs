@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -5,7 +6,6 @@ public class Movement : PlayerComponent
 {
     private Rigidbody rb;
     private PlayerInput input;
-    private Transform orientation;
 
     [SerializeField] private float drag = 20, airModifier = .3f;
 
@@ -18,7 +18,6 @@ public class Movement : PlayerComponent
         rb.freezeRotation = true;
 
         input = GetComponent<PlayerInput>();
-        orientation = input.Orientation;
 
     }
 
@@ -46,6 +45,7 @@ public class Movement : PlayerComponent
             case PlayerState.Walking: targetSpeed = specs.WalkSpeed; break;
             case PlayerState.Sprinting: targetSpeed = specs.SprintSpeed; break;
             case PlayerState.Crouching: targetSpeed = specs.CrouchSpeed; break;
+            case PlayerState.Sliding: targetSpeed = specs.SlideSpeed; break;
         }
     }
 
@@ -59,7 +59,10 @@ public class Movement : PlayerComponent
         UIManager.Instance.UpdateVelocity(rb.velocity.magnitude);
     }
 
-    private void SetSpeed(float _speed) => currentSpeed = _speed;
+    private void SetSpeed(float _speed)
+    {
+        currentSpeed = _speed;
+    }
 
     public void SetTargetSpeed(float _value) => targetSpeed = _value;
 
