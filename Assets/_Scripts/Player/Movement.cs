@@ -1,11 +1,8 @@
-using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput))]
 public class Movement : PlayerComponent
 {
     private Rigidbody rb;
-    private PlayerInput input;
 
     [SerializeField] private float drag = 20, airModifier = .3f;
 
@@ -16,9 +13,6 @@ public class Movement : PlayerComponent
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
-        input = GetComponent<PlayerInput>();
-
     }
 
     private void Start()
@@ -28,12 +22,13 @@ public class Movement : PlayerComponent
 
     private void OnEnable()
     {
-
+        PlayerInput.OnMoveInput += Move;
         Player.OnStateChange += ChangedState;
     }
 
     private void OnDisable()
     {
+        PlayerInput.OnMoveInput -= Move;
         Player.OnStateChange -= ChangedState;
     }
 
@@ -52,7 +47,6 @@ public class Movement : PlayerComponent
     private void FixedUpdate()
     {
         SetSpeed(targetSpeed);
-        Move(input.Move);
         SpeedLimit();
         CounterMovement();
 

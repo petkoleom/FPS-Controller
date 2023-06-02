@@ -6,9 +6,7 @@ using UnityEngine;
 public abstract class PlayerComponent : MonoBehaviour
 {
     protected Player player;
-
     protected PlayerSpecifications specs;
-
     protected Transform orientation;
 
     public void Init(Player _player, PlayerSpecifications _specs, Transform _orientation)

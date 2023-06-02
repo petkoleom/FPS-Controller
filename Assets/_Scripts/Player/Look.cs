@@ -1,18 +1,15 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput))]
 public class Look : PlayerComponent
 {
-    private PlayerInput input;
     private Transform cam;
 
-    [SerializeField] private Transform cameraPosition, cameraPrefab;
+    [SerializeField] private Transform cameraPosition, cameraPrefab, weaponHolder;
 
     private float xRot, yRot;
 
     private void Awake()
     {
-        input = GetComponent<PlayerInput>();
         cam = Instantiate(cameraPrefab);
         cam.GetComponent<PlayerCamera>().Init(cameraPosition);
 
@@ -20,9 +17,14 @@ public class Look : PlayerComponent
         Cursor.visible = false;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        Looking(input.Look);
+        PlayerInput.OnLookInput += Looking;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInput.OnLookInput -= Looking;
     }
 
     private void Looking(Vector2 _look)
@@ -40,6 +42,7 @@ public class Look : PlayerComponent
     {
         cam.rotation = Quaternion.Euler(_xRot, _yRot, 0);
         cameraPosition.rotation = Quaternion.Euler(_xRot, _yRot, 0);
+        weaponHolder.rotation = Quaternion.Euler(_xRot, _yRot, 0);
         orientation.localRotation = Quaternion.Euler(0, _yRot, 0);
     }
 }

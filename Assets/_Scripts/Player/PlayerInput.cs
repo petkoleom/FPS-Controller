@@ -6,15 +6,17 @@ public class PlayerInput : MonoBehaviour
 {
     private UnityEngine.InputSystem.PlayerInput input;
 
-    public Vector2 Move { get; private set; }
-    public Vector2 Look { get; private set; }
+    // Movement Input
+    public static event Action<Vector2> OnMoveInput;
+    public static event Action<Vector2> OnLookInput;
 
     public static event Action<bool> OnJumpInput;
-    public static event Action<bool> OnSprintInput; 
-    public static event Action OnCrouchInput; 
+    public static event Action<bool> OnSprintInput;
+    public static event Action OnCrouchInput;
 
-    public bool Sprint { get; set; }
-
+    // Weapon Input
+    public static event Action OnSwitchInput;
+    public static event Action<bool, bool> OnFireInput;
 
     private void Awake()
     {
@@ -23,32 +25,40 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        MoveInput();
         LookInput();
         SprintInput();
+        FireInput();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveInput();
     }
 
     private void MoveInput()
     {
         var _forward = input.actions["Move"].ReadValue<Vector2>().y;
         var _side = input.actions["Move"].ReadValue<Vector2>().x;
-        Move = new Vector2(_forward, _side);
-
+        OnMoveInput?.Invoke(new Vector2(_forward, _side));
     }
 
     private void LookInput()
     {
         var _hor = input.actions["Look"].ReadValue<Vector2>().y;
         var _ver = input.actions["Look"].ReadValue<Vector2>().x;
-        Look = new Vector2(_hor, _ver);
+        OnLookInput?.Invoke(new Vector2(_hor, _ver));
     }
 
     private void SprintInput()
     {
-        Sprint = input.actions["Sprint"].IsPressed();
-        OnSprintInput?.Invoke(Sprint);
+        OnSprintInput?.Invoke(input.actions["Sprint"].IsPressed());
     }
 
+    private void FireInput()
+    {
+        var _action = input.actions["Fire"];
+        OnFireInput?.Invoke(_action.IsPressed(), _action.WasPressedThisFrame());
+    }
 
     public void OnJump(InputValue _value)
     {
@@ -59,5 +69,12 @@ public class PlayerInput : MonoBehaviour
     {
         OnCrouchInput?.Invoke();
     }
+
+    public void OnSwitch(InputValue _value)
+    {
+        OnSwitchInput?.Invoke();
+    }
+
+
 
 }
