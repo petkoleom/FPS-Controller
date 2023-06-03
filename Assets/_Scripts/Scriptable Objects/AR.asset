@@ -16,6 +16,7 @@ MonoBehaviour:
   Prefab: {fileID: 192920857402941115, guid: f7b4261d68fd1f849bd890d0e22082b2, type: 3}
   Damage: 35
   Mode: 2
+  Size: 1
   RateOfFire: 850
   Snapiness: 6
   ReturnSpeed: 6

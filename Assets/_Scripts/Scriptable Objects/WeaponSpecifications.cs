@@ -9,6 +9,7 @@ public class WeaponSpecifications : ScriptableObject
 
     public int Damage;
     public FireMode Mode;
+    public WeaponSize Size;
     public int RateOfFire;
 
     [Header("Recoil")]
@@ -31,4 +32,10 @@ public enum FireMode
     Semi,
     Burst,
     Auto
+}
+
+public enum WeaponSize
+{
+    Short,
+    Long
 }
