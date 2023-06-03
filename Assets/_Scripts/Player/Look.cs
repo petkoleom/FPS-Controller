@@ -29,7 +29,7 @@ public class Look : PlayerComponent
 
     private void Looking(Vector2 _look)
     {
-        Vector2 _adjustedLook = Time.fixedDeltaTime * specs.Sensitivity * _look;
+        Vector2 _adjustedLook = Time.fixedDeltaTime * player.Specs.Sensitivity * _look;
         var _rot = cam.rotation.eulerAngles;
         xRot -= _adjustedLook.x;
         xRot = Mathf.Clamp(xRot, -90, 90);
@@ -43,6 +43,6 @@ public class Look : PlayerComponent
         cam.rotation = Quaternion.Euler(_xRot, _yRot, 0);
         cameraPosition.rotation = Quaternion.Euler(_xRot, _yRot, 0);
         weaponHolder.rotation = Quaternion.Euler(_xRot, _yRot, 0);
-        orientation.localRotation = Quaternion.Euler(0, _yRot, 0);
+        player.Orientation.localRotation = Quaternion.Euler(0, _yRot, 0);
     }
 }

@@ -11,7 +11,7 @@ public class Shooting : WeaponComponent
     private bool allowFire = true;
     private bool canFire { get { return allowFire && timeUntilNextShot <= 0; } }
 
-    public static event Action<bool> OnShot;
+    public static event Action<bool, float> OnShot;
 
 
     private void OnEnable()
@@ -26,7 +26,7 @@ public class Shooting : WeaponComponent
         Ammo.OnReloading -= SetAllowFire;
     }
 
-    private void SetAllowFire(bool _value)
+    private void SetAllowFire(bool _value, float _duration)
     {
         allowFire = !_value;
     }
@@ -61,7 +61,7 @@ public class Shooting : WeaponComponent
 
     private void Shoot()
     {
-        OnShot?.Invoke(true);
+        OnShot?.Invoke(true, .2f);
         if (TryGetComponent(out Ammo _ammo)) _ammo.ShotFired();
         if(Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit _hit))
         {

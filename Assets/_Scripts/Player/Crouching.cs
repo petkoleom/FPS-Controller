@@ -5,23 +5,29 @@ public class Crouching : PlayerComponent
 {
     [SerializeField] private float crouchScale;
 
+    [SerializeField] Transform cameraPosition;
+
     Vector3 originScale;
+
+    bool isCrouching;
 
     private void Start()
     {
-        originScale = transform.localScale;
+        originScale = player.Body.localScale;
     }
 
     private void OnEnable()
     {
         PlayerInput.OnCrouchInput += Crouch;
         Jumping.OnStandUp += StandUp;
+        Sprinting.OnStartSprinting += StandUp;
     }
 
     private void OnDisable()
     {
         PlayerInput.OnCrouchInput -= Crouch;
         Jumping.OnStandUp -= StandUp;
+        Sprinting.OnStartSprinting -= StandUp;
     }
 
     private void Crouch()
@@ -31,14 +37,19 @@ public class Crouching : PlayerComponent
             StandUp();
         else
         {
-            transform.DOScaleY(crouchScale, .2f);
+            isCrouching = true;
+            player.Body.DOScaleY(crouchScale, .2f);
+            cameraPosition.DOMoveY(1f, .2f);
             player.TryCrouching = true;
         }
     }
 
     private void StandUp()
     {
-        transform.DOScaleY(originScale.y, .2f);
+        if (!isCrouching) return;
+        isCrouching = false;
+        player.Body.DOScaleY(originScale.y, .2f);
+        cameraPosition.DOMoveY(1.5f, .2f);
         player.TryCrouching = false;
 
     }

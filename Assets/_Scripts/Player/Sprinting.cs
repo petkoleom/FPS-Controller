@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Sprinting : PlayerComponent
 {
     private bool sprintHeld;
+
+    public static event Action OnStartSprinting;
 
     private void Update()
     {
@@ -22,5 +25,6 @@ public class Sprinting : PlayerComponent
     private void Sprint(bool _value)
     {
         sprintHeld = _value;
+        if(sprintHeld && player.Rb.velocity.magnitude > .01f) OnStartSprinting?.Invoke();
     }
 }

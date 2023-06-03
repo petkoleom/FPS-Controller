@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5117306337498531838}
   - component: {fileID: 1353135963}
+  - component: {fileID: 603515080}
   m_Layer: 0
   m_Name: Weapons
   m_TagString: Untagged
@@ -361,6 +362,19 @@ MonoBehaviour:
   maxRotationAmount: 3
   smoothRotationAmount: 12
   aimModifier: 0.2
+--- !u!114 &603515080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534676007230171728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5640986c2c094d14c88029567db53179, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 560896460}
 --- !u!1 &3749203613922835281
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,8 +516,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac5fc83b229ab348a3cf37a55086b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specs: {fileID: 11400000, guid: c14f5f3a787757c48af932c619d5039e, type: 2}
-  orientation: {fileID: 80251502}
+  Rb: {fileID: 0}
+  Specs: {fileID: 11400000, guid: c14f5f3a787757c48af932c619d5039e, type: 2}
+  Orientation: {fileID: 80251502}
+  Body: {fileID: 80251502}
   IsGrounded: 0
   TryWalking: 0
   TrySprinting: 0
@@ -602,6 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchScale: 0.6
+  cameraPosition: {fileID: 560896460}
 --- !u!114 &830943841
 MonoBehaviour:
   m_ObjectHideFlags: 0

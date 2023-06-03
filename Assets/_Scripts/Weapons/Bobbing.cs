@@ -38,7 +38,7 @@ public class Bobbing : WeaponComponent
         state = _state;
     }
 
-    private void SetADS(bool _value) => isAiming = _value;
+    private void SetADS(bool _value, float _duration) => isAiming = _value;
 
     private void Awake()
     {
@@ -50,8 +50,9 @@ public class Bobbing : WeaponComponent
     private void Update()
     {
         CalculateTargetPos(rb.velocity.magnitude);
-        bobbingTransform.localPosition = Vector3.Lerp(bobbingTransform.localPosition, targetPos, Time.deltaTime * 6);
-        bobbingTransform.localRotation = Quaternion.Slerp(bobbingTransform.localRotation, Quaternion.Euler(targetRot), Time.deltaTime * 6);
+        var _lerpSpeed = state == PlayerState.Falling || state == PlayerState.Airborne ? 3 : 8;
+        bobbingTransform.localPosition = Vector3.Lerp(bobbingTransform.localPosition, targetPos, Time.deltaTime * _lerpSpeed);
+        bobbingTransform.localRotation = Quaternion.Slerp(bobbingTransform.localRotation, Quaternion.Euler(targetRot), Time.deltaTime * _lerpSpeed);
     }
 
     private void CalculateTargetPos(float _velocity)
@@ -74,8 +75,19 @@ public class Bobbing : WeaponComponent
             targetPos = sprintOriginPos + new Vector3(Mathf.Cos(movementCounter) * (isAiming ? xIntensity * .1f : xIntensity) * 2, Mathf.Sin(movementCounter * 2) * (isAiming ? yIntensity * .1f : yIntensity) * 2, 0);
             targetRot = sprintOriginRot;
         }
+        else if (state == PlayerState.Sliding)
+        {
+            targetPos = walkOriginPos + Vector3.down * .2f;
+            targetRot = Vector3.zero;
+
+        }
         else if(state == PlayerState.Airborne)
         {
+            targetPos = walkOriginPos + Vector3.down * .5f;
+        }
+        else if(state == PlayerState.Falling)
+        {
+            targetPos = walkOriginPos + Vector3.up * .5f;
 
         }
     }

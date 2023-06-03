@@ -2,22 +2,15 @@ using UnityEngine;
 
 public class Movement : PlayerComponent
 {
-    private Rigidbody rb;
-
     [SerializeField] private float drag = 20, airModifier = .3f;
 
     private float currentSpeed;
     private float targetSpeed;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-    }
 
     private void Start()
     {
-        targetSpeed = specs.WalkSpeed;
+        targetSpeed = player.Specs.WalkSpeed;
     }
 
     private void OnEnable()
@@ -36,11 +29,11 @@ public class Movement : PlayerComponent
     {
         switch (_state)
         {
-            case PlayerState.Airborne: targetSpeed = currentSpeed * specs.airborneSpeedModifier; break;
-            case PlayerState.Walking: targetSpeed = specs.WalkSpeed; break;
-            case PlayerState.Sprinting: targetSpeed = specs.SprintSpeed; break;
-            case PlayerState.Crouching: targetSpeed = specs.CrouchSpeed; break;
-            case PlayerState.Sliding: targetSpeed = specs.SlideSpeed; break;
+            case PlayerState.Airborne: targetSpeed = currentSpeed * player.Specs.airborneSpeedModifier; break;
+            case PlayerState.Walking: targetSpeed = player.Specs.WalkSpeed; break;
+            case PlayerState.Sprinting: targetSpeed = player.Specs.SprintSpeed; break;
+            case PlayerState.Crouching: targetSpeed = player.Specs.CrouchSpeed; break;
+            case PlayerState.Sliding: targetSpeed = player.Specs.SlideSpeed; break;
         }
     }
 
@@ -50,7 +43,7 @@ public class Movement : PlayerComponent
         SpeedLimit();
         CounterMovement();
 
-        UIManager.Instance.UpdateVelocity(rb.velocity.magnitude);
+        UIManager.Instance.UpdateVelocity(player.Rb.velocity.magnitude);
     }
 
     private void SetSpeed(float _speed)
@@ -64,28 +57,28 @@ public class Movement : PlayerComponent
     {
         player.TryWalking = _dir.magnitude > 0;
 
-        var _moveDir = _dir.x * orientation.forward + _dir.y * orientation.right;
+        var _moveDir = _dir.x * player.Orientation.forward + _dir.y * player.Orientation.right;
 
         if (player.State == PlayerState.Airborne)
-            rb.AddForce(currentSpeed * drag * airModifier * _moveDir.normalized, ForceMode.Acceleration);
+            player.Rb.AddForce(currentSpeed * drag * airModifier * _moveDir.normalized, ForceMode.Acceleration);
         else
-            rb.AddForce(currentSpeed * drag * _moveDir.normalized, ForceMode.Acceleration);
+            player.Rb.AddForce(currentSpeed * drag * _moveDir.normalized, ForceMode.Acceleration);
     }
 
     private void SpeedLimit()
     {
-        var _flatVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        var _flatVel = new Vector3(player.Rb.velocity.x, 0, player.Rb.velocity.z);
         if (_flatVel.magnitude <= currentSpeed) return;
 
         Vector3 _limitedVel = _flatVel.normalized * currentSpeed;
-        rb.velocity = new Vector3(_limitedVel.x, rb.velocity.y, _limitedVel.z);
+        player.Rb.velocity = new Vector3(_limitedVel.x, player.Rb.velocity.y, _limitedVel.z);
     }
 
     private void CounterMovement()
     {
-        if (player.State == PlayerState.Airborne) return;
+        if (player.State == PlayerState.Falling || player.State == PlayerState.Airborne) return;
         var _friction = (currentSpeed * drag) / (targetSpeed + .1f);
-        rb.AddForce(-rb.velocity * _friction, ForceMode.Acceleration);
+        player.Rb.AddForce(-player.Rb.velocity * _friction, ForceMode.Acceleration);
     }
 
 }

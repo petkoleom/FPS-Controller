@@ -26,7 +26,7 @@ public class Sway : MonoBehaviour
         ADS.OnAiming -= SetAiming;
     }
 
-    private void SetAiming(bool _value) => isAiming = _value;
+    private void SetAiming(bool _value, float _duration) => isAiming = _value;
 
     private void Start()
     {

@@ -36,7 +36,7 @@ public class Recoil : WeaponComponent
         recoilTransform.localPosition = currentPos;
     }
 
-    public void CalculateRecoil(bool _value)
+    public void CalculateRecoil(bool _value, float _duration)
     {
         targetPos -= new Vector3(0, 0, handler.Specs.Kickback);
         targetRot += new Vector3(handler.Specs.VisualRecoil.x, Random.Range(-handler.Specs.VisualRecoil.y, handler.Specs.VisualRecoil.y), Random.Range(-handler.Specs.VisualRecoil.z, handler.Specs.VisualRecoil.z));

@@ -1,17 +1,9 @@
 using System;
 using UnityEngine;
 
-
 public class Jumping : PlayerComponent
 {
-    private Rigidbody rb;
-
     public static event Action OnStandUp;
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     private void OnEnable()
     {
@@ -32,6 +24,6 @@ public class Jumping : PlayerComponent
         }
         if (player.State == PlayerState.Airborne || !_value) return;
 
-        rb.AddForce(specs.JumpForce * Vector3.up, ForceMode.Impulse);
+        player.Rb.AddForce(player.Specs.JumpForce * Vector3.up, ForceMode.Impulse);
     }
 }

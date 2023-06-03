@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class HeadBobbing : PlayerComponent
 {
-
-    private Rigidbody rb;
-
     [SerializeField] private Transform camHolder;
     [SerializeField] private float speed;
     [SerializeField] private float amount;
@@ -14,7 +11,7 @@ public class HeadBobbing : PlayerComponent
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        player.Rb = GetComponent<Rigidbody>();
         originY = camHolder.position.y;
         print(originY);
     }
@@ -28,7 +25,7 @@ public class HeadBobbing : PlayerComponent
     {
         if (player.State == PlayerState.Airborne) return;
 
-        if(rb.velocity.magnitude > .1f && player.State == PlayerState.Sprinting)
+        if(player.Rb.velocity.magnitude > .1f && player.State == PlayerState.Sprinting)
         {
             timer += Time.deltaTime * speed;
             camHolder.localPosition = new Vector3(

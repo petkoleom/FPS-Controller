@@ -11,7 +11,7 @@ public class ADS : WeaponComponent
 
     private bool tryAiming;
 
-    public static event Action<bool> OnAiming;
+    public static event Action<bool, float> OnAiming;
 
     private void OnEnable()
     {
@@ -31,7 +31,7 @@ public class ADS : WeaponComponent
     private void Update()
     {
         CalculateADSPosition();
-        OnAiming?.Invoke(tryAiming);
+        OnAiming?.Invoke(tryAiming, .1f);
     }
 
 

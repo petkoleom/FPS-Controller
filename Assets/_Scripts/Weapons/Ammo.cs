@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ammo : WeaponComponent
 {
 
-    public static event Action<bool> OnReloading;
+    public static event Action<bool, float> OnReloading;
 
     private void Start()
     {
@@ -50,7 +50,7 @@ public class Ammo : WeaponComponent
 
     private IEnumerator Reload(float _duration)
     {
-        OnReloading?.Invoke(true);
+        OnReloading?.Invoke(true, _duration);
         handler.Animator.SetFloat("ReloadDuration", 1 / _duration);
         handler.Animator.CrossFade("Reload", 0, 0);
         yield return new WaitForSeconds(_duration);
@@ -70,7 +70,7 @@ public class Ammo : WeaponComponent
 
         UIManager.Instance.UpdateAmmo($"{handler.Specs.AmmoInMag} | {handler.Specs.AmmoInRes}");
 
-        OnReloading?.Invoke(false);
+        OnReloading?.Invoke(false, 0);
     }
 
 }

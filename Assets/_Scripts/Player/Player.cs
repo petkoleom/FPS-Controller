@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerSpecifications specs;
-    [SerializeField] private Transform orientation;
+    public Rigidbody Rb;
+
+    public PlayerSpecifications Specs;
+    public Transform Orientation;
+    public Transform Body;
 
     public bool IsGrounded;
     public bool TryWalking;
@@ -21,10 +24,13 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        Rb = GetComponent<Rigidbody>();
+        Rb.freezeRotation = true;
+
         PlayerComponent[] _components = GetComponents<PlayerComponent>();
         foreach (PlayerComponent _comp in _components)
         {
-            _comp.Init(this, specs, orientation);
+            _comp.Init(this);
         }
     }
 
@@ -32,12 +38,14 @@ public class Player : MonoBehaviour
     {
         Shooting.OnShot += SlowDown;
         ADS.OnAiming += SlowDown;
+        Ammo.OnReloading += SlowDown;
     }
 
     private void OnDisable()
     {
         Shooting.OnShot -= SlowDown;
         ADS.OnAiming -= SlowDown;
+        Ammo.OnReloading -= SlowDown;
     }
 
     private void Update()
@@ -67,15 +75,19 @@ public class Player : MonoBehaviour
                 State = PlayerState.Idle;
         }
         else
-            State = PlayerState.Airborne;
+        {
+            if (Rb.velocity.y < 0)
+                State = PlayerState.Falling;
+            else
+                State = PlayerState.Airborne;
+
+        }
     }
 
-
-
-    private void SlowDown(bool _value)
+    private void SlowDown(bool _value, float _duration)
     {
         if (_value)
-            slowDownTimer = .2f;
+            slowDownTimer = _duration;
     }
 }
 
@@ -86,5 +98,6 @@ public enum PlayerState
     Sprinting,
     Crouching,
     Sliding,
-    Airborne
+    Airborne,
+    Falling
 }
