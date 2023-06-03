@@ -17,6 +17,8 @@ MonoBehaviour:
   Damage: 27
   Mode: 0
   RateOfFire: 360
+  VisualRecoil: {x: -10, y: 1, z: 1}
+  Kickback: 0.02
   ReloadDuration: 0.3
   MagSize: 12
   ReserveSize: 900

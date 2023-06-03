@@ -3,12 +3,19 @@ using UnityEngine;
 [CreateAssetMenu]
 public class WeaponSpecifications : ScriptableObject
 {
+    [Header("General")]
     public string Name;
     public GameObject Prefab;
 
     public int Damage;
     public FireMode Mode;
     public int RateOfFire;
+
+    [Header("Recoil")]
+    public float Snapiness;
+    public float ReturnSpeed;
+    public Vector3 VisualRecoil;
+    public float Kickback;
 
     [Header("Ammo")]
     public float ReloadDuration;

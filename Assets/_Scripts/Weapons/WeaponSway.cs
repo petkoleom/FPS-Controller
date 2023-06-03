@@ -5,15 +5,8 @@ using UnityEngine.Windows;
 
 public class WeaponSway : MonoBehaviour
 {
-    [SerializeField] private float amount;
-    [SerializeField] private float maxAmount;
-    [SerializeField] private float smoothAmount;
-
-    [SerializeField] private float rotationAmount;
-    [SerializeField] private float maxRotationAmount;
-    [SerializeField] private float smoothRotationAmount;
-
-    private Transform weapon;
+    [SerializeField] private Transform swayTransform;
+    [SerializeField] private float amount, maxAmount, smoothAmount, rotationAmount, maxRotationAmount, smoothRotationAmount;
 
     private Vector3 originPos;
     private Quaternion originRot;
@@ -31,9 +24,9 @@ public class WeaponSway : MonoBehaviour
 
     private void Start()
     {
-        weapon = transform.GetChild(0);
-        originPos = weapon.localPosition;
-        originRot = weapon.localRotation;
+
+        originPos = swayTransform.localPosition;
+        originRot = swayTransform.localRotation;
     }
 
     private void HandleInput(Vector2 _input)
@@ -48,7 +41,7 @@ public class WeaponSway : MonoBehaviour
         var _moveY = Mathf.Clamp(amount * -_input.x, -maxAmount, maxAmount);
         var _finalPos = new Vector3(_moveX, _moveY, 0);
 
-        weapon.localPosition = Vector3.Lerp(weapon.localPosition, originPos + _finalPos, Time.deltaTime * smoothAmount);
+        swayTransform.localPosition = Vector3.Lerp(swayTransform.localPosition, originPos + _finalPos, Time.deltaTime * smoothAmount);
     }
 
     private void TiltSway(Vector2 _input)
@@ -57,7 +50,7 @@ public class WeaponSway : MonoBehaviour
         var _tiltY = Mathf.Clamp(rotationAmount * -_input.y, -maxRotationAmount, maxRotationAmount);
         var _finalRot = Quaternion.Euler(new Vector3(-_tiltX, 0, _tiltY));
 
-        weapon.localRotation = Quaternion.Slerp(weapon.localRotation, originRot * _finalRot, Time.deltaTime * smoothRotationAmount);
+        swayTransform.localRotation = Quaternion.Slerp(swayTransform.localRotation, originRot * _finalRot, Time.deltaTime * smoothRotationAmount);
     }
 
 }

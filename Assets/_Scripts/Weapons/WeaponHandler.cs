@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class WeaponHandler : MonoBehaviour
     private WeaponSpecifications currentWeapon;
     private Animator animator;
 
+    public static event Action OnChangedWeapon;
+
     private void Awake()
     {
 
@@ -20,9 +23,7 @@ public class WeaponHandler : MonoBehaviour
             var _weaponGO = Instantiate(_weapon.Prefab, weaponHolder);
             _weaponGO.SetActive(_weaponGO.transform.GetSiblingIndex() == 0);
         }
-        currentWeaponTransform = weaponHolder.GetChild(0);
-        currentWeapon = loadout[0];
-        animator = currentWeaponTransform.GetComponent<Animator>();
+        SetWeaponData(0);   
 
         SendSpecsToComponents();
     }
@@ -54,9 +55,7 @@ public class WeaponHandler : MonoBehaviour
         for (int i = 0; i < weaponHolder.childCount; i++)
             if (currentWeaponTransform == weaponHolder.GetChild(i)) _currentIdx = i;
 
-        currentWeaponTransform = weaponHolder.GetChild(1 - _currentIdx);
-        currentWeapon = loadout[1 - _currentIdx];
-        animator = currentWeaponTransform.GetComponent<Animator>();
+        SetWeaponData(1 - _currentIdx);
 
         foreach (Transform _weapon in weaponHolder)
             _weapon.gameObject.SetActive(_weapon == currentWeaponTransform);
@@ -64,4 +63,11 @@ public class WeaponHandler : MonoBehaviour
         SendSpecsToComponents();
     }
 
+    private void SetWeaponData(int _idx)
+    {
+        currentWeaponTransform = weaponHolder.GetChild(_idx);
+        currentWeapon = loadout[_idx];
+        animator = currentWeaponTransform.GetComponent<Animator>();
+        OnChangedWeapon?.Invoke();
+    }
 }

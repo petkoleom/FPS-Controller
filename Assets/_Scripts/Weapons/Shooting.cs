@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Shooting : WeaponComponent
@@ -9,6 +10,8 @@ public class Shooting : WeaponComponent
 
     private bool allowFire = true;
     private bool canFire { get { return allowFire && timeUntilNextShot <= 0; } }
+
+    public static event Action OnShot;
 
 
     private void OnEnable()
@@ -58,6 +61,7 @@ public class Shooting : WeaponComponent
 
     private void Shoot()
     {
+        OnShot?.Invoke();
         if (TryGetComponent(out Ammo _ammo)) _ammo.ShotFired();
         if(Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit _hit))
         {
