@@ -16,7 +16,9 @@ public class PlayerInput : MonoBehaviour
 
     // Weapon Input
     public static event Action OnSwitchInput;
+    public static event Action OnReloadInput;
     public static event Action<bool, bool> OnFireInput;
+    public static event Action<bool> OnADSInput;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class PlayerInput : MonoBehaviour
         LookInput();
         SprintInput();
         FireInput();
+        ADSInput();
     }
 
     private void FixedUpdate()
@@ -51,13 +54,20 @@ public class PlayerInput : MonoBehaviour
 
     private void SprintInput()
     {
-        OnSprintInput?.Invoke(input.actions["Sprint"].IsPressed());
+        var _action = input.actions["Sprint"];
+        OnSprintInput?.Invoke(_action.IsPressed());
     }
 
     private void FireInput()
     {
         var _action = input.actions["Fire"];
         OnFireInput?.Invoke(_action.IsPressed(), _action.WasPressedThisFrame());
+    }
+
+    private void ADSInput()
+    {
+        var _action = input.actions["ADS"];
+        OnADSInput?.Invoke(_action.IsPressed());
     }
 
     public void OnJump(InputValue _value)
@@ -73,6 +83,11 @@ public class PlayerInput : MonoBehaviour
     public void OnSwitch(InputValue _value)
     {
         OnSwitchInput?.Invoke();
+    }
+
+    public void OnReload(InputValue _value)
+    {
+        OnReloadInput?.Invoke();
     }
 
 

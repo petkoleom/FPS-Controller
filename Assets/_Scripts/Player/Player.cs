@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] private PlayerSpecifications specs;
     [SerializeField] private Transform orientation;
 
@@ -16,6 +15,8 @@ public class Player : MonoBehaviour
     public PlayerState State;
     private PlayerState prevState;
 
+    private float slowDownTimer;
+
     public static event Action<PlayerState> OnStateChange;
 
     private void Awake()
@@ -27,6 +28,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        Shooting.OnShot += SlowDown;
+        ADS.OnAiming += SlowDown;
+    }
+
+    private void OnDisable()
+    {
+        Shooting.OnShot -= SlowDown;
+        ADS.OnAiming -= SlowDown;
+    }
+
     private void Update()
     {
         HandleStates();
@@ -34,6 +47,8 @@ public class Player : MonoBehaviour
             OnStateChange?.Invoke(State);
         prevState = State;
         UIManager.Instance.UpdateState(State);
+
+        if (slowDownTimer > 0) slowDownTimer -= Time.deltaTime;
     }
 
     private void HandleStates()
@@ -42,9 +57,9 @@ public class Player : MonoBehaviour
         {
             if (TryCrouching)
                 State = PlayerState.Crouching;
-            else if(TrySliding)
+            else if (TrySliding)
                 State = PlayerState.Sliding;
-            else if (TrySprinting)
+            else if (TrySprinting && TryWalking && slowDownTimer <= 0)
                 State = PlayerState.Sprinting;
             else if (TryWalking)
                 State = PlayerState.Walking;
@@ -53,6 +68,14 @@ public class Player : MonoBehaviour
         }
         else
             State = PlayerState.Airborne;
+    }
+
+
+
+    private void SlowDown(bool _value)
+    {
+        if (_value)
+            slowDownTimer = .2f;
     }
 }
 

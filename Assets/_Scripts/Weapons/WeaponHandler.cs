@@ -5,37 +5,33 @@ using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
 {
-    [SerializeField] private Transform weaponHolder;
+    public Transform WeaponHolder;
+    public Transform WeaponsParent;
     [SerializeField] private WeaponSpecifications[] loadout;
 
 
-    private Transform currentWeaponTransform;
-    private WeaponSpecifications currentWeapon;
-    private Animator animator;
+    public Transform WeaponTransform { get; set; }
+    public WeaponSpecifications Specs { get; set; }
+    public Animator Animator { get; set; }
 
-    public static event Action OnChangedWeapon;
+    public static event Action OnWeaponSwitch;
+
 
     private void Awake()
     {
 
         foreach (WeaponSpecifications _weapon in loadout)
         {
-            var _weaponGO = Instantiate(_weapon.Prefab, weaponHolder);
+            var _weaponGO = Instantiate(_weapon.Prefab, WeaponHolder);
             _weaponGO.SetActive(_weaponGO.transform.GetSiblingIndex() == 0);
         }
-        SetWeaponData(0);   
+        SetWeaponData(0);
 
-        SendSpecsToComponents();
-    }
-
-    private void SendSpecsToComponents()
-    {
         WeaponComponent[] _components = GetComponents<WeaponComponent>();
         foreach (WeaponComponent _comp in _components)
         {
-            _comp.Init(currentWeapon, animator);
+            _comp.Init(this);
         }
-
     }
 
     private void OnEnable()
@@ -52,22 +48,22 @@ public class WeaponHandler : MonoBehaviour
     {
         int _currentIdx = 0;
 
-        for (int i = 0; i < weaponHolder.childCount; i++)
-            if (currentWeaponTransform == weaponHolder.GetChild(i)) _currentIdx = i;
+        for (int i = 0; i < WeaponHolder.childCount; i++)
+            if (WeaponTransform == WeaponHolder.GetChild(i)) _currentIdx = i;
 
         SetWeaponData(1 - _currentIdx);
 
-        foreach (Transform _weapon in weaponHolder)
-            _weapon.gameObject.SetActive(_weapon == currentWeaponTransform);
+        foreach (Transform _weapon in WeaponHolder)
+            _weapon.gameObject.SetActive(_weapon == WeaponTransform);
 
-        SendSpecsToComponents();
+        OnWeaponSwitch?.Invoke();
+
     }
 
     private void SetWeaponData(int _idx)
     {
-        currentWeaponTransform = weaponHolder.GetChild(_idx);
-        currentWeapon = loadout[_idx];
-        animator = currentWeaponTransform.GetComponent<Animator>();
-        OnChangedWeapon?.Invoke();
+        WeaponTransform = WeaponHolder.GetChild(_idx);
+        Specs = loadout[_idx];
+        Animator = WeaponTransform.GetComponent<Animator>();
     }
 }

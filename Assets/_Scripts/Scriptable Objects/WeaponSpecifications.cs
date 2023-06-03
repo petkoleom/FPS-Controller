@@ -21,6 +21,9 @@ public class WeaponSpecifications : ScriptableObject
     public float ReloadDuration;
     public int MagSize;
     public int ReserveSize;
+
+    public int AmmoInMag { get; set; }
+    public int AmmoInRes { get; set; }
 }
 
 public enum FireMode

@@ -11,7 +11,7 @@ public class Shooting : WeaponComponent
     private bool allowFire = true;
     private bool canFire { get { return allowFire && timeUntilNextShot <= 0; } }
 
-    public static event Action OnShot;
+    public static event Action<bool> OnShot;
 
 
     private void OnEnable()
@@ -43,16 +43,16 @@ public class Shooting : WeaponComponent
     private void HandleFireInput(bool _isPressed, bool _wasPerformed)
     {
         if (!canFire) return;
-        if(specs.Mode == FireMode.Semi)
+        if(handler.Specs.Mode == FireMode.Semi)
         {
             if (!_wasPerformed) return;
             Shoot();
         }
-        else if(specs.Mode == FireMode.Burst)
+        else if(handler.Specs.Mode == FireMode.Burst)
         {
 
         }
-        else if(specs.Mode == FireMode.Auto)
+        else if(handler.Specs.Mode == FireMode.Auto)
         {
             if (!_isPressed) return;
             Shoot();
@@ -61,14 +61,14 @@ public class Shooting : WeaponComponent
 
     private void Shoot()
     {
-        OnShot?.Invoke();
+        OnShot?.Invoke(true);
         if (TryGetComponent(out Ammo _ammo)) _ammo.ShotFired();
         if(Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit _hit))
         {
             if(_hit.transform.TryGetComponent(out IDamage _iDamage))
-                _iDamage.TakeDamage(specs.Damage);
+                _iDamage.TakeDamage(handler.Specs.Damage);
         }
-        timeUntilNextShot = 60f / specs.RateOfFire;
+        timeUntilNextShot = 60f / handler.Specs.RateOfFire;
     }
 
 }

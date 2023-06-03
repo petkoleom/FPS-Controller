@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
-                    "type": "Button",
-                    "id": "b9e8f9c0-f75b-43bf-9716-45fcd0ae887a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Value",
                     "id": "b96f9230-c95e-444f-89d6-dfe99796f10c",
@@ -60,9 +51,36 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "b9e8f9c0-f75b-43bf-9716-45fcd0ae887a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ADS",
+                    "type": "Value",
+                    "id": "bc414a0a-ffde-4b57-98bd-95420672ae4d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Switch",
                     "type": "Button",
                     "id": "ccb2f92f-c2c7-415b-a080-2e4531e9b3fa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "92e63fc1-cbf5-463b-a850-8cbcfd784b98",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -292,6 +310,28 @@
                 },
                 {
                     "name": "",
+                    "id": "76f6aed3-6175-465b-a848-64e183541fff",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd912056-0e30-498b-8930-4eff10bb1c88",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ADS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "299f6166-9c86-4c56-a851-9df1095acb46",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -325,12 +365,12 @@
                 },
                 {
                     "name": "",
-                    "id": "76f6aed3-6175-465b-a848-64e183541fff",
-                    "path": "<Mouse>/scroll/y",
+                    "id": "40e93b76-a99f-4f50-b671-3e9473f49998",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

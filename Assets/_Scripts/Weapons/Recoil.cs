@@ -23,23 +23,23 @@ public class Recoil : WeaponComponent
 
     private void Update()
     {
-        targetRot = Vector3.Lerp(targetRot, Vector3.zero, Time.deltaTime * specs.ReturnSpeed);
-        currentRot = Vector3.Slerp(currentRot, targetRot, Time.fixedDeltaTime * specs.Snapiness);
+        targetRot = Vector3.Lerp(targetRot, Vector3.zero, Time.deltaTime * handler.Specs.ReturnSpeed);
+        currentRot = Vector3.Slerp(currentRot, targetRot, Time.fixedDeltaTime * handler.Specs.Snapiness);
         recoilTransform.localRotation = Quaternion.Euler(currentRot);
         CalculateKickback();
     }
 
     private void CalculateKickback()
     {
-        targetPos = Vector3.Lerp(targetPos, originPos, Time.deltaTime * specs.ReturnSpeed);
-        currentPos = Vector3.Lerp(currentPos, targetPos, Time.fixedDeltaTime * specs.Snapiness);
+        targetPos = Vector3.Lerp(targetPos, originPos, Time.deltaTime * handler.Specs.ReturnSpeed);
+        currentPos = Vector3.Lerp(currentPos, targetPos, Time.fixedDeltaTime * handler.Specs.Snapiness);
         recoilTransform.localPosition = currentPos;
     }
 
-    public void CalculateRecoil()
+    public void CalculateRecoil(bool _value)
     {
-        targetPos -= new Vector3(0, 0, specs.Kickback);
-        targetRot += new Vector3(specs.VisualRecoil.x, Random.Range(-specs.VisualRecoil.y, specs.VisualRecoil.y), Random.Range(-specs.VisualRecoil.z, specs.VisualRecoil.z));
+        targetPos -= new Vector3(0, 0, handler.Specs.Kickback);
+        targetRot += new Vector3(handler.Specs.VisualRecoil.x, Random.Range(-handler.Specs.VisualRecoil.y, handler.Specs.VisualRecoil.y), Random.Range(-handler.Specs.VisualRecoil.z, handler.Specs.VisualRecoil.z));
     }
 
 }

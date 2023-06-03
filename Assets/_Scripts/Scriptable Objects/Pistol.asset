@@ -17,7 +17,9 @@ MonoBehaviour:
   Damage: 27
   Mode: 0
   RateOfFire: 360
-  VisualRecoil: {x: -10, y: 1, z: 1}
+  Snapiness: 5
+  ReturnSpeed: 4
+  VisualRecoil: {x: -15, y: 3, z: 5}
   Kickback: 0.02
   ReloadDuration: 0.3
   MagSize: 12

@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(WeaponHandler))]
 public abstract class WeaponComponent : MonoBehaviour
 {
-    protected WeaponSpecifications specs;
-    protected Animator animator;
+    protected WeaponHandler handler;
 
-    public void Init(WeaponSpecifications _specs, Animator _animator)
+    public void Init(WeaponHandler _handler)
     {
-        specs = _specs;
-        animator = _animator;
+        handler = _handler;
     }
 }
