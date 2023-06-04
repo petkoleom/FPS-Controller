@@ -46,7 +46,7 @@ public class Crouching : PlayerComponent
 
     private void StandUp()
     {
-        if (!isCrouching || player.State == PlayerState.Sliding) return;
+        if (!isCrouching) return;
         isCrouching = false;
         player.Body.DOScaleY(originScale.y, .2f);
         cameraPosition.DOLocalMoveY(1.5f, .2f);

@@ -9,8 +9,13 @@ public class Ammo : WeaponComponent
 
     private void Start()
     {
-        handler.Specs.AmmoInMag = handler.Specs.MagSize;
-        handler.Specs.AmmoInRes = handler.Specs.ReserveSize;
+
+        foreach(WeaponSpecifications _specs in handler.Loadout)
+        {
+            _specs.AmmoInMag = _specs.MagSize;
+            _specs.AmmoInRes = _specs.ReserveSize;
+
+        }
 
         UIManager.Instance.UpdateAmmo($"{handler.Specs.AmmoInMag} | {handler.Specs.AmmoInRes}");
 

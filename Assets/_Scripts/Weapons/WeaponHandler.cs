@@ -7,7 +7,7 @@ public class WeaponHandler : MonoBehaviour
 {
     public Transform WeaponHolder;
     public Transform WeaponsParent;
-    [SerializeField] private WeaponSpecifications[] loadout;
+    public WeaponSpecifications[] Loadout;
 
 
     public Transform WeaponTransform { get; set; }
@@ -20,7 +20,7 @@ public class WeaponHandler : MonoBehaviour
     private void Awake()
     {
 
-        foreach (WeaponSpecifications _weapon in loadout)
+        foreach (WeaponSpecifications _weapon in Loadout)
         {
             var _weaponGO = Instantiate(_weapon.Prefab, WeaponHolder);
             _weaponGO.SetActive(_weaponGO.transform.GetSiblingIndex() == 0);
@@ -63,7 +63,7 @@ public class WeaponHandler : MonoBehaviour
     private void SetWeaponData(int _idx)
     {
         WeaponTransform = WeaponHolder.GetChild(_idx);
-        Specs = loadout[_idx];
+        Specs = Loadout[_idx];
         Animator = WeaponTransform.GetComponent<Animator>();
     }
 }
