@@ -1,3 +1,5 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 
 public class Movement : PlayerComponent
@@ -6,6 +8,9 @@ public class Movement : PlayerComponent
 
     private float currentSpeed;
     private float targetSpeed;
+
+    public static event Action<bool> OnWalkForward;
+    public static event Action<float> OnStrafe;
 
 
     private void Start()
@@ -56,6 +61,8 @@ public class Movement : PlayerComponent
     private void Move(Vector2 _dir)
     {
         player.TryWalking = _dir.magnitude > 0;
+        OnWalkForward?.Invoke(_dir.x > 0);
+        OnStrafe?.Invoke(_dir.y);
 
         var _moveDir = _dir.x * player.Orientation.forward + _dir.y * player.Orientation.right;
 

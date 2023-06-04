@@ -101,11 +101,11 @@ public class Bobbing : WeaponComponent
         }
         else if(state == PlayerState.Airborne)
         {
-            targetPos = walkOriginPos + Vector3.down * .5f;
+            targetPos = walkOriginPos + Vector3.down * .2f;
         }
         else if(state == PlayerState.Falling)
         {
-            targetPos = walkOriginPos + Vector3.up * .5f;
+            targetPos = walkOriginPos + Vector3.up * .2f;
 
         }
     }

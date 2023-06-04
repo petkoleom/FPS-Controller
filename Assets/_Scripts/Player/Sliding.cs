@@ -11,6 +11,10 @@ public class Sliding : PlayerComponent
     [SerializeField] private float slideScale;
     [SerializeField] private float slideForce;
 
+    private float slideTimer;
+
+    private bool isSliding;
+
     Vector3 originScale;
     private void Start()
     {
@@ -29,14 +33,22 @@ public class Sliding : PlayerComponent
         Jumping.OnStandUp -= StandUp;
     }
 
+    private void Update()
+    {
+        if (slideTimer > 0) slideTimer -= Time.deltaTime;
+    }
+
     private void Slide()
     {
-        if (player.State != PlayerState.Sprinting) return;
+        if (player.State != PlayerState.Sprinting || slideTimer > 0 || isSliding) return;
 
+        player.TrySliding = true;
+        isSliding = true;
+        slideTimer = .8f;
         player.Rb.AddForce(slideForce * player.Orientation.forward, ForceMode.Impulse);
         player.Body.DOScaleY(slideScale, .2f);
-        cameraPosition.DOMoveY(1f, .2f);
-        player.TrySliding = true;
+        cameraPosition.DOLocalMoveY(1f, .2f);
+
 
         Invoke("StandUp", .5f);
     }
@@ -44,9 +56,10 @@ public class Sliding : PlayerComponent
     private void StandUp()
     {
         player.Body.DOScaleY(originScale.y, .2f);
-        cameraPosition.DOMoveY(1.5f, .2f);
+        cameraPosition.DOLocalMoveY(1.5f, .2f);
 
         player.TrySliding = false;
+        isSliding = false;
     }
 
 }

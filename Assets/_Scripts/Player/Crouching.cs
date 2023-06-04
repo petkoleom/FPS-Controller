@@ -32,24 +32,24 @@ public class Crouching : PlayerComponent
 
     private void Crouch()
     {
-        if (player.State == PlayerState.Airborne || player.State == PlayerState.Sprinting) return;
+        if (player.State == PlayerState.Airborne || player.State == PlayerState.Sprinting || player.State == PlayerState.Sliding) return;
         if (player.State == PlayerState.Crouching)
             StandUp();
         else
         {
             isCrouching = true;
             player.Body.DOScaleY(crouchScale, .2f);
-            cameraPosition.DOMoveY(1f, .2f);
+            cameraPosition.DOLocalMoveY(1f, .2f);
             player.TryCrouching = true;
         }
     }
 
     private void StandUp()
     {
-        if (!isCrouching) return;
+        if (!isCrouching || player.State == PlayerState.Sliding) return;
         isCrouching = false;
         player.Body.DOScaleY(originScale.y, .2f);
-        cameraPosition.DOMoveY(1.5f, .2f);
+        cameraPosition.DOLocalMoveY(1.5f, .2f);
         player.TryCrouching = false;
 
     }

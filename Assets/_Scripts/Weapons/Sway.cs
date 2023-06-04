@@ -1,10 +1,8 @@
-using DG.Tweening;
-using System.Net.Sockets;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class Sway : MonoBehaviour
 {
+
     [SerializeField] private Transform swayTransform;
     [SerializeField] private float amount, maxAmount, smoothAmount, rotationAmount, maxRotationAmount, smoothRotationAmount, aimModifier;
 
@@ -18,20 +16,39 @@ public class Sway : MonoBehaviour
     {
         PlayerInput.OnLookInput += HandleInput;
         ADS.OnAiming += SetAiming;
+        Movement.OnStrafe += HandleStrafing;
     }
 
     private void OnDisable()
     {
         PlayerInput.OnLookInput -= HandleInput;
         ADS.OnAiming -= SetAiming;
+        Movement.OnStrafe -= HandleStrafing;
     }
 
     private void SetAiming(bool _value, float _duration) => isAiming = _value;
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
         originPos = swayTransform.localPosition;
         originRot = swayTransform.localRotation;
+    }
+
+    private void Update()
+    {
+
+    }
+
+    private void HandleStrafing(float _value)
+    {
+        if (_value < 0)
+            TiltSway(new Vector2(_value * 10, _value * 10));
+        if (_value > 0)
+            TiltSway(new Vector2(_value * 10, _value * 10));
     }
 
     private void HandleInput(Vector2 _input)
@@ -62,5 +79,6 @@ public class Sway : MonoBehaviour
 
         swayTransform.localRotation = Quaternion.Slerp(swayTransform.localRotation, originRot * _finalRot, Time.deltaTime * smoothRotationAmount);
     }
+
 
 }
