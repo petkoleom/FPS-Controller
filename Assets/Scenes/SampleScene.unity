@@ -1018,12 +1018,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1353135963, guid: daba3da7c21ff16428dd376824231899, type: 3}
+      propertyPath: amount
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353135963, guid: daba3da7c21ff16428dd376824231899, type: 3}
+      propertyPath: maxAmount
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353135963, guid: daba3da7c21ff16428dd376824231899, type: 3}
       propertyPath: rotationAmount
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1353135963, guid: daba3da7c21ff16428dd376824231899, type: 3}
       propertyPath: maxRotationAmount
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1522716430277837714, guid: daba3da7c21ff16428dd376824231899, type: 3}
       propertyPath: Loadout.Array.size

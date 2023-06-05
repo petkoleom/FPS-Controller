@@ -16,14 +16,12 @@ public class Sway : MonoBehaviour
     {
         PlayerInput.OnLookInput += HandleInput;
         ADS.OnAiming += SetAiming;
-        Movement.OnStrafe += HandleStrafing;
     }
 
     private void OnDisable()
     {
         PlayerInput.OnLookInput -= HandleInput;
         ADS.OnAiming -= SetAiming;
-        Movement.OnStrafe -= HandleStrafing;
     }
 
     private void SetAiming(bool _value, float _duration) => isAiming = _value;
@@ -34,15 +32,6 @@ public class Sway : MonoBehaviour
         originRot = swayTransform.localRotation;
     }
 
-
-    private void HandleStrafing(float _value)
-    {
-        if (_value < 0)
-            TiltSway(new Vector2(_value * 10, _value * 10));
-        if (_value > 0)
-            TiltSway(new Vector2(_value * 10, _value * 10));
-    }
-
     private void HandleInput(Vector2 _input)
     {
         MoveSway(_input);
@@ -51,26 +40,30 @@ public class Sway : MonoBehaviour
 
     private void MoveSway(Vector2 _input)
     {
-        var _amount = isAiming ? amount * aimModifier : amount;
-        var _maxAmount = isAiming ? maxAmount * aimModifier : maxAmount;
-        var _moveX = Mathf.Clamp(_amount * -_input.y, -_maxAmount, _maxAmount);
-        var _moveY = Mathf.Clamp(_amount * -_input.x, -_maxAmount, _maxAmount);
-        var _finalPos = new Vector3(_moveX, _moveY, 0);
-
+        var _finalPos = Vector3.zero;
+        if (_input.magnitude > 2)
+        {
+            var _amount = isAiming ? amount * aimModifier : amount;
+            var _maxAmount = isAiming ? maxAmount * aimModifier : maxAmount;
+            var _moveX = Mathf.Clamp(_amount * -_input.y, -_maxAmount, _maxAmount);
+            var _moveY = Mathf.Clamp(_amount * -_input.x, -_maxAmount, _maxAmount);
+            _finalPos = new Vector3(_moveX, _moveY, 0);
+        }
         swayTransform.localPosition = Vector3.Lerp(swayTransform.localPosition, originPos + _finalPos, Time.deltaTime * smoothAmount);
     }
 
     private void TiltSway(Vector2 _input)
     {
-        var _amount = isAiming ? rotationAmount * aimModifier : rotationAmount;
-        var _maxAmount = isAiming ? maxRotationAmount * aimModifier : maxRotationAmount;
+        var _finalRot = Quaternion.identity;
+        if (_input.magnitude > 2)
+        {
+            var _amount = isAiming ? rotationAmount * aimModifier : rotationAmount;
+            var _maxAmount = isAiming ? maxRotationAmount * aimModifier : maxRotationAmount;
 
-        var _tiltX = Mathf.Clamp(_amount * -_input.x, -_maxAmount, _maxAmount);
-        var _tiltY = Mathf.Clamp(_amount * -_input.y, -_maxAmount, _maxAmount);
-        var _finalRot = Quaternion.Euler(new Vector3(-_tiltX, 0, _tiltY));
-
+            var _tiltX = Mathf.Clamp(_amount * -_input.x, -_maxAmount, _maxAmount);
+            var _tiltY = Mathf.Clamp(_amount * -_input.y, -_maxAmount, _maxAmount);
+            _finalRot = Quaternion.Euler(new Vector3(-_tiltX, 0, _tiltY)); 
+        }
         swayTransform.localRotation = Quaternion.Slerp(swayTransform.localRotation, originRot * _finalRot, Time.deltaTime * smoothRotationAmount);
     }
-
-
 }
