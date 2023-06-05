@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed44b62c3e513a74c91511d517bcbd8f, type: 3}
-  m_Name: Player
+  m_Name: _Player
   m_EditorClassIdentifier: 
   WalkSpeed: 8
   SprintSpeed: 13

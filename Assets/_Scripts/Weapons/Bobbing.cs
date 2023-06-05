@@ -89,7 +89,6 @@ public class Bobbing : WeaponComponent
 
             }
 
-
             targetPos = _originPos + new Vector3(Mathf.Cos(movementCounter) * (isAiming ? xIntensity * .1f : xIntensity) * 2, Mathf.Sin(movementCounter * 2) * (isAiming ? yIntensity * .1f : yIntensity) * 2, 0);
             targetRot = _originRot;
         }
@@ -102,10 +101,12 @@ public class Bobbing : WeaponComponent
         else if(state == PlayerState.Airborne)
         {
             targetPos = walkOriginPos + Vector3.down * .2f;
+            targetRot = Vector3.zero;
         }
         else if(state == PlayerState.Falling)
         {
             targetPos = walkOriginPos + Vector3.up * .2f;
+            targetRot = Vector3.zero;
 
         }
     }

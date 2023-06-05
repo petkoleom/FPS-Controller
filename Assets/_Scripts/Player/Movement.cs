@@ -12,7 +12,6 @@ public class Movement : PlayerComponent
     public static event Action<bool> OnWalkForward;
     public static event Action<float> OnStrafe;
 
-
     private void Start()
     {
         targetSpeed = player.Specs.WalkSpeed;
@@ -35,6 +34,7 @@ public class Movement : PlayerComponent
         switch (_state)
         {
             case PlayerState.Airborne: targetSpeed = currentSpeed * player.Specs.airborneSpeedModifier; break;
+            case PlayerState.Idle: targetSpeed = player.Specs.WalkSpeed; break;
             case PlayerState.Walking: targetSpeed = player.Specs.WalkSpeed; break;
             case PlayerState.Sprinting: targetSpeed = player.Specs.SprintSpeed; break;
             case PlayerState.Crouching: targetSpeed = player.Specs.CrouchSpeed; break;
@@ -49,6 +49,7 @@ public class Movement : PlayerComponent
         CounterMovement();
 
         UIManager.Instance.UpdateVelocity(player.Rb.velocity.magnitude);
+        Crosshair.Instance.SetVelocity((int)currentSpeed);
     }
 
     private void SetSpeed(float _speed)

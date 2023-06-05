@@ -28,20 +28,12 @@ public class Sway : MonoBehaviour
 
     private void SetAiming(bool _value, float _duration) => isAiming = _value;
 
-    private void Awake()
-    {
-    }
-
     private void Start()
     {
         originPos = swayTransform.localPosition;
         originRot = swayTransform.localRotation;
     }
 
-    private void Update()
-    {
-
-    }
 
     private void HandleStrafing(float _value)
     {

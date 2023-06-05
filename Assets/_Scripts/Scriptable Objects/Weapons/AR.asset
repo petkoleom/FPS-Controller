@@ -15,9 +15,12 @@ MonoBehaviour:
   Name: AR
   Prefab: {fileID: 192920857402941115, guid: f7b4261d68fd1f849bd890d0e22082b2, type: 3}
   Damage: 35
-  Mode: 2
-  Size: 1
   RateOfFire: 850
+  Spread: 75
+  AimSpreadModifier: 0.1
+  Mode: 3
+  Size: 1
+  Projectile: 0
   Snapiness: 6
   ReturnSpeed: 6
   VisualRecoil: {x: -1, y: 0.5, z: 1}

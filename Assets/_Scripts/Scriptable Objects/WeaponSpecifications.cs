@@ -8,9 +8,13 @@ public class WeaponSpecifications : ScriptableObject
     public GameObject Prefab;
 
     public int Damage;
+    public int RateOfFire;
+    public int Spread;
+    public float AimSpreadModifier;
     public FireMode Mode;
     public WeaponSize Size;
-    public int RateOfFire;
+    public ProjectileType Projectile;
+
 
     [Header("Recoil")]
     public float Snapiness;
@@ -29,6 +33,7 @@ public class WeaponSpecifications : ScriptableObject
 
 public enum FireMode
 {
+    Single,
     Semi,
     Burst,
     Auto
@@ -38,4 +43,11 @@ public enum WeaponSize
 {
     Short,
     Long
+}
+
+public enum ProjectileType
+{
+    Bullet,
+    Pellets,
+    Missile
 }

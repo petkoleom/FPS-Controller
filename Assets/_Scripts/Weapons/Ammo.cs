@@ -33,7 +33,7 @@ public class Ammo : WeaponComponent
         PlayerInput.OnReloadInput -= Reload;
     }
 
-    private void Setup()
+    private void Setup(ProjectileType _type)
     {
         UIManager.Instance.UpdateAmmo($"{handler.Specs.AmmoInMag} | {handler.Specs.AmmoInRes}");
     }

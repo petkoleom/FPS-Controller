@@ -14,7 +14,7 @@ public class WeaponHandler : MonoBehaviour
     public WeaponSpecifications Specs { get; set; }
     public Animator Animator { get; set; }
 
-    public static event Action OnWeaponSwitch;
+    public static event Action<ProjectileType> OnWeaponSwitch;
 
 
     private void Awake()
@@ -56,7 +56,7 @@ public class WeaponHandler : MonoBehaviour
         foreach (Transform _weapon in WeaponHolder)
             _weapon.gameObject.SetActive(_weapon == WeaponTransform);
 
-        OnWeaponSwitch?.Invoke();
+        OnWeaponSwitch?.Invoke(Specs.Projectile);
 
     }
 
