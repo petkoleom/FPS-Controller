@@ -32,7 +32,7 @@ public class Crouching : PlayerComponent
 
     private void Crouch()
     {
-        if (player.State == PlayerState.Airborne || player.State == PlayerState.Sprinting || player.State == PlayerState.Sliding) return;
+        if (player.State == PlayerState.Jumping || player.State == PlayerState.Sprinting || player.State == PlayerState.Sliding) return;
         if (player.State == PlayerState.Crouching)
             StandUp();
         else

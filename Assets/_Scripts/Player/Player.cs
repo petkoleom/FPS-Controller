@@ -9,11 +9,14 @@ public class Player : MonoBehaviour
     public Transform Orientation;
     public Transform Body;
 
+    private Vector3 flatVelocity;
+
     public bool IsGrounded;
     public bool TryWalking;
     public bool TrySprinting;
     public bool TryCrouching;
     public bool TrySliding;
+    public bool TryWallrunning;
 
     public PlayerState State;
     private PlayerState prevState;
@@ -56,6 +59,8 @@ public class Player : MonoBehaviour
         prevState = State;
         UIManager.Instance.UpdateState(State);
 
+        flatVelocity = new Vector3(Rb.velocity.x, 0, Rb.velocity.z);
+
         if (slowDownTimer > 0) slowDownTimer -= Time.deltaTime;
     }
 
@@ -76,10 +81,12 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (Rb.velocity.y < 0)
+            if (TryWallrunning && flatVelocity.magnitude > 8)
+                State = PlayerState.Wallrunning;
+            else if (Rb.velocity.y < 0)
                 State = PlayerState.Falling;
             else
-                State = PlayerState.Airborne;
+                State = PlayerState.Jumping;
 
         }
     }
@@ -98,6 +105,7 @@ public enum PlayerState
     Sprinting,
     Crouching,
     Sliding,
-    Airborne,
+    Wallrunning,
+    Jumping,
     Falling
 }

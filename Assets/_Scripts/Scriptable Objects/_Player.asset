@@ -16,6 +16,7 @@ MonoBehaviour:
   SprintSpeed: 13
   CrouchSpeed: 3
   SlideSpeed: 18
+  wallrunSpeed: 15
   airborneSpeedModifier: 0.7
   JumpForce: 15
   Sensitivity: 5

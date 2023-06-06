@@ -355,11 +355,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swayTransform: {fileID: 1383829879943248440}
-  amount: 0.04
-  maxAmount: 0.1
+  amount: 0.01
+  maxAmount: 0.06
   smoothAmount: 6
-  rotationAmount: 3
-  maxRotationAmount: 4
+  rotationAmount: 4
+  maxRotationAmount: 5
   smoothRotationAmount: 12
   aimModifier: 0.2
 --- !u!114 &603515080
@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 1178154548}
   - component: {fileID: 1853656385108709485}
   - component: {fileID: 830943841}
+  - component: {fileID: 2221959936550524406}
   - component: {fileID: 1522716430277837714}
   - component: {fileID: 830943843}
   - component: {fileID: 830943844}
@@ -525,6 +526,7 @@ MonoBehaviour:
   TrySprinting: 0
   TryCrouching: 0
   TrySliding: 0
+  TryWallrunning: 0
   State: 0
 --- !u!114 &5545457589399293774
 MonoBehaviour:
@@ -634,6 +636,23 @@ MonoBehaviour:
   cameraPosition: {fileID: 560896460}
   slideScale: 0.6
   slideForce: 30
+--- !u!114 &2221959936550524406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3762946601856325534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa4a7c15d99c6d4b9b98659fd2bd6a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallrunForce: 15
+  maxWallrunTime: 0.5
+  wallCheckDistance: 1
+  minJumpHeight: 0.4
+  exitWallTime: 0.3
 --- !u!114 &1522716430277837714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,9 +667,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponHolder: {fileID: 1383829879943248440}
   WeaponsParent: {fileID: 5117306337498531838}
-  loadout:
+  Loadout:
   - {fileID: 11400000, guid: 60eb3c5ed566fb04183cc03c0f7f0e6b, type: 2}
-  - {fileID: 11400000, guid: abdd32ab81c93d041b4e9fd75ecf34fa, type: 2}
+  - {fileID: 11400000, guid: 3bdf3c213d4763c46911ed00c84b4d0a, type: 2}
 --- !u!114 &830943843
 MonoBehaviour:
   m_ObjectHideFlags: 0

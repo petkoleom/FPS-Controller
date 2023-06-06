@@ -8,6 +8,7 @@ public class PlayerSpecifications : ScriptableObject
     public int SprintSpeed;
     public int CrouchSpeed;
     public int SlideSpeed;
+    public int wallrunSpeed;
     public float airborneSpeedModifier;
 
     [Header("Air")]

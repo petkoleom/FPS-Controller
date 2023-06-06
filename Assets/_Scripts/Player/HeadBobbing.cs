@@ -23,7 +23,7 @@ public class HeadBobbing : PlayerComponent
 
     private void Headbob()
     {
-        if (player.State == PlayerState.Airborne) return;
+        if (player.State == PlayerState.Jumping) return;
 
         if(player.Rb.velocity.magnitude > .1f && player.State == PlayerState.Sprinting)
         {

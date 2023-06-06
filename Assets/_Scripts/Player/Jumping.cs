@@ -22,7 +22,7 @@ public class Jumping : PlayerComponent
             OnStandUp?.Invoke();
             return;
         }
-        if (player.State == PlayerState.Airborne || !_value) return;
+        if (player.State == PlayerState.Jumping || player.State == PlayerState.Falling || player.State == PlayerState.Wallrunning || !_value) return;
 
         player.Rb.AddForce(player.Specs.JumpForce * Vector3.up, ForceMode.Impulse);
     }

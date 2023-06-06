@@ -52,7 +52,7 @@ public class Bobbing : WeaponComponent
     private void Update()
     {
         CalculateTargetPos(rb.velocity.magnitude);
-        var _lerpSpeed = state == PlayerState.Falling || state == PlayerState.Airborne ? 3 : 8;
+        var _lerpSpeed = state == PlayerState.Falling || state == PlayerState.Jumping ? 3 : 8;
         bobbingTransform.localPosition = Vector3.Lerp(bobbingTransform.localPosition, targetPos, Time.deltaTime * _lerpSpeed);
         bobbingTransform.localRotation = Quaternion.Slerp(bobbingTransform.localRotation, Quaternion.Euler(targetRot), Time.deltaTime * _lerpSpeed);
     }
@@ -73,7 +73,7 @@ public class Bobbing : WeaponComponent
             targetPos = walkOriginPos + new Vector3(Mathf.Cos(movementCounter) * (isAiming ? xIntensity * .1f : xIntensity), Mathf.Sin(movementCounter * 2) * (isAiming ? yIntensity * .1f : yIntensity), 0);
             targetRot = Vector3.zero;
         }
-        else if(state == PlayerState.Sprinting)
+        else if(state == PlayerState.Sprinting || state == PlayerState.Wallrunning)
         {
             var _originPos = Vector3.zero;
             var _originRot = Vector3.zero;
@@ -98,7 +98,7 @@ public class Bobbing : WeaponComponent
             targetRot = Vector3.zero;
 
         }
-        else if(state == PlayerState.Airborne)
+        else if(state == PlayerState.Jumping)
         {
             targetPos = walkOriginPos + Vector3.down * .2f;
             targetRot = Vector3.zero;
